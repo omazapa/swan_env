@@ -1,0 +1,32 @@
+#!/bin/bash -l
+
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do 
+  DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" 
+done
+
+SWAN_ENV_BIN_DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+SWAN_ENV_DIR="$(cd $SWAN_ENV_BIN_DIR/.. && pwd)"
+SWAN_ENV_ETC_DIR=$SWAN_ENV_DIR/etc
+SWAN_ENV_LIB_DIR=$SWAN_ENV_DIR/lib
+SWAN_ENV_CURRENT="NONE"
+
+echo $SWAN_ENV_BIN_DIR
+echo $SWAN_ENV_DIR
+SWAN_ENV_OPT=$1
+if [ "$SWAN_ENV_OPT" == 'env' ]; then
+    ENV_OPT=$2
+    if [ "$ENV_OPT" == 'base' ]; then
+        . $SWAN_ENV_LIB_DIR/base.sh
+        swan_env_activate_base
+    fi
+
+    if [ "$ENV_OPT" == 'cmssw' ]; then
+        SCRAM_ARCH=$3
+        CMSSW=$4
+        . $SWAN_ENV_LIB_DIR/cmssw.sh
+        swan_env_activate_cmssw $SCRAM_ARCH $CMSSW
+    fi
+fi
