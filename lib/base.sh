@@ -1,9 +1,6 @@
 #!/bin/bash
 
-#source $SWAN_ENV_ETC_DIR/config.sh
-
-
-swan_env_activate_base()
+}swan_env_activate_base()
 {
    SWAN_ENV_CURRENT="base"
    PS1=$PS1'(swan-'$SWAN_ENV_CURRENT'):'

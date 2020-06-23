@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if [ "$1" == "cmssw" ]; then
+    source $SWAN_ENV_LIB_DIR/cmssw.sh
+    swan_env_load_cmssw $2 $3
+fi
